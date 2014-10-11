@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pollster</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+
+  <!-- 1. Load platform.js for polyfill support. -->
+  <script src="components/platform/platform.js"></script>
+
+  <!-- 2. Use an HTML Import to bring in the element. -->
+  <link rel="import" href="components/core-ajax/core-ajax.html">
+
+  <!-- <link rel="import" href="../components/font-roboto/roboto.html"> -->
+  <!-- <link rel="import" href="../components/core-header-panel/core-header-panel.html"> -->
+  <!-- <link rel="import" href="../components/core-toolbar/core-toolbar.html"> -->
+  <link rel="import" href="../components/paper-tabs/paper-tabs.html">
+  <!-- <link rel="import" href="poll.html"> -->
+  <!-- <link rel="import" href="post-list.html"> -->
+
+</head>
+
+<body unresolved>
+
+    <!-- 3. Declare the element. Configure using its attributes. -->
+    <core-ajax url="api/poll_1.json" handleAs="json"></core-ajax>
+
+    <paper-tabs selected="0">
+      <paper-tab>TAB 1</paper-tab>
+      <paper-tab>TAB 2</paper-tab>
+      <paper-tab>TAB 3</paper-tab>
+    </paper-tabs>
+
+
+    <!-- <poll></poll> -->
+<!--     <core-header-panel flex>
+      <core-toolbar>
+        <div>Hello World!</div>
+      </core-toolbar>
+    </core-header-panel> -->
+
+  <script>
+    // Wait for 'polymer-ready'. Ensures the element is upgraded.
+    window.addEventListener('polymer-ready', function(e) {
+      var ajax = document.querySelector('core-ajax');
+
+      // Respond to events it fires.
+      ajax.addEventListener('core-response', function(e) {
+        data = this.response;
+        console.log(this.response);
+      });
+
+      ajax.go(); // Call its API methods.
+    });
+  </script>
+
+</body>
+
+</html>
