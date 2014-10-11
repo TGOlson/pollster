@@ -1,0 +1,62 @@
+<link rel="import" href="components/polymer/polymer.html">
+<!-- <link rel="import" href="components/core-icons/core-icons.html"> -->
+<!-- <link rel="import" href="components/paper-button/paper-button.html"> -->
+<link rel="import" href="components/paper-input/paper-input.html">
+<link rel="import" href="components/core-icons/core-icons.html">
+<link rel="import" href="components/paper-icon-button/paper-icon-button.html">
+
+
+<polymer-element name="poll-form" attributes="show">
+  <template>
+    <style>
+    .header {
+      color: #bbb;
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .poll-form {
+      margin-top: 50px;
+    }
+
+    paper-icon-button {
+      margin-top: 25px;
+      position: absolute;
+    }
+    </style>
+
+    <div class="poll-form" layout vertical hidden?="{{!show}}">
+      <div layout horizontal center-justified>
+        <span class="header">What question do you want to ask?</span>
+      </div>
+      <div layout horizontal center-justified>
+        <paper-input
+          floatingLabel
+          label="What question do you want to ask?"
+          required error="Must ask a question!">
+        </paper-input>
+      </div>
+      <div layout horizontal center-justified>
+        <paper-input
+          floatingLabel
+          label="Option #1">
+        </paper-input>
+        <paper-icon-button icon="add"></paper-icon-button>
+      </div>
+    </div>
+
+  </template>
+  <script>
+  Polymer({
+    publish: {
+      show: {
+        value: false,
+        reflect: true
+      }
+    },
+    toggleShow: function() {
+      this.show = !this.show;
+    }
+  });
+  </script>
+</polymer-element>
