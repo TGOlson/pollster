@@ -3,84 +3,26 @@
 <head>
   <title>Pollster</title>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-
-  <!-- Platform -->
   <script src="components/platform/platform.js"></script>
-
-  <!-- Font -->
   <link rel="import" href="components/font-roboto/roboto.html">
-
-  <!-- Core -->
-  <link rel="import" href="components/core-icons/core-icons.html">
-  <link rel="import" href="components/core-toolbar/core-toolbar.html">
-
-  <!-- Paper -->
-  <link rel="import" href="components/paper-item/paper-item.html">
-  <link rel="import" href="components/paper-icon-button/paper-icon-button.html">
-
-  <!-- Custom Components -->
-  <link rel="import" href="action-block.html">
-  <link rel="import" href="poll-form.html">
-
-
+  <link rel="import" href="bower_components/app-router/app-router.html">
   <style>
     body {
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
       margin: 0;
       padding: 24px;
     }
-
-    core-toolbar {
-      color: #f1f1f1;
-      fill: #f1f1f1;
-    }
   </style>
-
 </head>
 
 <body unresolved>
-
-  <core-toolbar class="tall" style="background: #4285f4;">
-    <paper-item icon="explore" label="Pollster" class="bottom" flex></paper-item>
-    <paper-icon-button icon="refresh" class="bottom"></paper-icon-button>
-    <paper-icon-button icon="more-vert" class="bottom"></paper-icon-button>
-  </core-toolbar>
-
-  <action-block
-    icon="arrow-forward"
-    action="show-poll-form">
-    <span class="header">Create a new poll</span>
-    <span>Start collecting results in just a few seconds</span>
-  </action-block>
-
-  <poll-form show="false"></poll-form>
+  <app-router>
+    <app-route path="/" import="/pages/new-poll.html"></app-route>
+    <app-route path="/poll/:id" import="/features/poll-list.html"></app-route>
+    <app-route path="*" import="/pages/new-poll.html"></app-route>
+  </app-router>
 
   <script>
-    // Polymer({
-    //   showPollForm: function() {
-    //     console.log('should show new poll form now');
-    //   }
-    window.addEventListener('polymer-ready', function(e) {
-      // });
-      var showPoll = document.querySelector('action-block');
-      var pollForm = document.querySelector('poll-form');
-
-      showPoll.addEventListener('show-poll-form', function(e) {
-        console.log('showing poll externally');
-        pollForm.toggleShow();
-        showPoll.hidden = true;
-      });
-    // Wait for 'polymer-ready'. Ensures the element is upgraded.
-    //   var ajax = document.querySelector('core-ajax');
-
-    //   // Respond to events it fires.
-    //   ajax.addEventListener('core-response', function(e) {
-    //     data = this.response;
-    //     console.log(this.response);
-    //   });
-
-    //   ajax.go(); // Call its API methods.
-    });
   </script>
 
 </body>

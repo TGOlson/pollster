@@ -1,0 +1,64 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/core-icons/core-icons.html">
+<link rel="import" href="../components/paper-fab/paper-fab.html">
+
+
+<polymer-element name="action-block" attributes="icon action">
+  <template>
+    <style>
+    :host {
+      /*display: block;*/
+    }
+
+    div {
+      text-align: center;
+    }
+
+    .section-header {
+      margin-top: 100px;
+    }
+
+    polyfill-next-selector { content: ".section-header .header"; }
+    .section-header ::content .header {
+      color:  #4285f4;
+      font-size: 50px;
+      text-transform: uppercase;
+    }
+
+    .subtext {
+      margin-top: 20px;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+
+    paper-fab {
+      color: #4285f4;
+      background-color: white;
+      margin-left: 15px;
+    }
+
+    </style>
+
+    <div layout vertical>
+      <div class="section-header" layout horizontal center-justified>
+        <content select=".header"></content>
+        <paper-fab icon="{{icon}}" on-tap="{{actionTapped}}"></paper-fab>
+      </div>
+      <div class="subtext" layout horizontal center-justified>
+        <content></content>
+      </div>
+    </div>
+
+  </template>
+  <script>
+  Polymer({
+    actionTapped: function() {
+      console.log('actionTapped', this.action);
+
+      // fire actions the component was initialized with
+      // example: 'show-poll-form'
+      this.fire(this.action);
+    }
+  });
+  </script>
+</polymer-element>

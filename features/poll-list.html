@@ -1,0 +1,33 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="poll-service.html">
+<link href="../bower_components/core-icons/core-icons.html" rel="import">
+<link href="../bower_components/paper-fab/paper-fab.html" rel="import">
+<!-- <link rel="import" href="post-card.html"> -->
+
+<polymer-element name="poll-list" attributes="show">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    </style>
+
+    <poll-service id="service" polls="{{polls}}"></poll-service>
+
+
+    <div layout vertical center>
+      <template repeat="{{poll in polls}}">
+        <h2>{{poll.name}}</h2>
+        <paper-fab icon="arrow-forward"></paper-fab>
+      </template>
+
+    </div>
+  </template>
+
+  <script>
+  Polymer({});
+  </script>
+
+</polymer-element>
