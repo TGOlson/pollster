@@ -1,11 +1,10 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../components/polymer/polymer.html">
 
-<link rel="import" href="poll-service.html">
-<link href="../bower_components/core-icons/core-icons.html" rel="import">
-<link href="../bower_components/paper-fab/paper-fab.html" rel="import">
-<!-- <link rel="import" href="post-card.html"> -->
+<link href="./poll-service.html" rel="import">
+<link href="../components/core-icons/core-icons.html" rel="import">
+<link href="../components/paper-fab/paper-fab.html" rel="import">
 
-<polymer-element name="poll-list" attributes="show">
+<polymer-element name="poll-list" attributes="show" noscript>
   <template>
     <style>
     :host {
@@ -16,7 +15,6 @@
 
     <poll-service id="service" polls="{{polls}}"></poll-service>
 
-
     <div layout vertical center>
       <template repeat="{{poll in polls}}">
         <h2>{{poll.name}}</h2>
@@ -25,9 +23,4 @@
 
     </div>
   </template>
-
-  <script>
-  Polymer({});
-  </script>
-
 </polymer-element>

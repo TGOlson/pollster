@@ -1,0 +1,17 @@
+{
+  "question": "What is a cool poll?",
+  "options": [
+    {
+      "text": "Not this",
+      "count": 0
+    },
+    {
+      "text": "Maybe something",
+      "count": 0
+    },
+    {
+      "text": "Whatever",
+      "count": 0
+    }
+  ]
+}

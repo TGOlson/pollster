@@ -1,1 +1,61 @@
-show-poll.html
+<link rel="import" href="../components/polymer/polymer.html">
+
+<link href="../features/poll-service.html" rel="import">
+<link href="../components/core-icons/core-icons.html" rel="import">
+<link href="../components/paper-checkbox/paper-checkbox.html" rel="import">
+
+<polymer-element name="show-poll" attributes="pollId">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    .header {
+      color: #bbb;
+      font-size: 40px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    paper-checkbox {
+      padding: 20px 20px 20px 0;
+    }
+    p {
+      padding: 5px;
+    }
+    </style>
+
+    <poll-service id="service" pollId="{{pollId}}" poll="{{poll}}"></poll-service>
+
+    <div layout vertical center>
+      <p class="header">{{poll.question}}</p>
+      <template repeat="{{option in poll.options}}">
+        <div horizontal layout justified style="width:300px">
+          <paper-checkbox
+            on-change="{{handleClick}}">
+          </paper-checkbox>
+          <h4 flex>{{option.text}}</h4>
+          <p>{{option.count}}</p>
+        </div>
+      </template>
+
+    </div>
+  </template>
+
+  <script>
+  Polymer({
+    handleClick: function(event, detail, sender) {
+      var checked = event.target.checked,
+        option = sender.templateInstance.model.option;
+
+      if(checked) {
+        option.count++;
+      } else {
+        option.count--;
+      }
+
+      // post to sever here
+    }
+  });
+  </script>
+</polymer-element>

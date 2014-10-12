@@ -1,7 +1,7 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/core-ajax/core-ajax.html">
 
-<polymer-element name="poll-service" attributes="polls">
+<polymer-element name="poll-service" attributes="poll pollId">
   <template>
     <style>
     :host {
@@ -9,9 +9,8 @@
     }
     </style>
     <core-ajax id="ajax"
-      auto
-      url="api/polls.json"
-      on-core-response="{{pollsLoaded}}"
+      auto url="../api/poll-{{pollId}}.json"
+      on-core-response="{{pollLoaded}}"
       handleAs="json">
     </core-ajax>
   </template>
@@ -20,26 +19,11 @@
     created: function() {
       this.polls = [];
     },
-    pollsLoaded: function() {
-      // Make a copy of the loaded data
+    pollLoaded: function() {
       console.log(this.$.ajax.response);
 
-      this.polls = this.$.ajax.response.slice(0);
-    },
-
-    /**
-     * Update the service with the current favorite value.
-     * (Two-way data binding updates the favorite value
-     * stored locally.) If this was a real service, this
-     * method would do something useful.
-     *
-     * @method setFavorite
-     * @param uid {Number} Unique ID for post.
-     * @param isFavorite {Boolean} True if the user marked this post as a favorite.
-     */
-    setFavorite: function(uid, isFavorite) {
-      // no service backend, just log the change
-      console.log('Favorite changed: ' + uid + ", now: " + isFavorite);
+      // Make a copy of the loaded data
+      this.poll = this.$.ajax.response;
     }
   });
   </script>
