@@ -20,47 +20,32 @@
     }
     </style>
 
+    <core-toolbar class="tall" style="background: #4285f4;">
+      <paper-item icon="explore" label="Pollster" class="bottom" flex></paper-item>
+      <paper-icon-button icon="refresh" class="bottom"></paper-icon-button>
+      <paper-icon-button icon="add" class="bottom"></paper-icon-button>
+    </core-toolbar>
 
-  <core-toolbar class="tall" style="background: #4285f4;">
-    <paper-item icon="explore" label="Pollster" class="bottom" flex></paper-item>
-    <paper-icon-button icon="refresh" class="bottom"></paper-icon-button>
-    <paper-icon-button icon="add" class="bottom"></paper-icon-button>
-  </core-toolbar>
+    <action-block id="actionBlock"
+      icon="arrow-forward"
+      event="show-form"
+      on-show-form="{{showForm}}">
+      <span class="header">Create a new poll</span>
+      <span>Start collecting results in just a few seconds</span>
+    </action-block>
 
-  <action-block icon="arrow-forward" action="{{showForm}}">
-    <span class="header">Create a new poll</span>
-    <span>Start collecting results in just a few seconds</span>
-  </action-block>
-
-  <poll-form show="false"></poll-form>
+    <poll-form id="pollForm" hidden></poll-form>
 
   </template>
   <script>
-  Polymer({
+  Polymer('new-poll', {
     showForm: function() {
-      console.log('event showing');
+      var actionBlock = this.$.actionBlock,
+          pollForm = this.$.pollForm;
+
+      actionBlock.hidden = true;
+      pollForm.hidden = false;
     }
   });
-    // window.addEventListener('polymer-ready', function(e) {
-      // });
-      // var showPoll = document.querySelector('action-block');
-      // var pollForm = document.querySelector('poll-form');
-
-      // showPoll.addEventListener('show-poll-form', function(e) {
-      //   console.log('showing poll externally');
-      //   pollForm.toggleShow();
-      //   showPoll.hidden = true;
-      // });
-    // Wait for 'polymer-ready'. Ensures the element is upgraded.
-    //   var ajax = document.querySelector('core-ajax');
-
-    //   // Respond to events it fires.
-    //   ajax.addEventListener('core-response', function(e) {
-    //     data = this.response;
-    //     console.log(this.response);
-    //   });
-
-    //   ajax.go(); // Call its API methods.
-    // });
   </script>
 </polymer-element>

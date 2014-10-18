@@ -4,6 +4,12 @@ Real-time polling/survey application made with Polymer. [See it live](http://tgo
 
 Created with a focus on an intuitive & responsive UI, made with reusable components.
 
+Install components
+
+```
+$ bower install
+```
+
 Start a server for the app
 
 ```

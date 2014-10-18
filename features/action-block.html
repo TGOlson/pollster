@@ -3,7 +3,7 @@
 <link rel="import" href="../components/paper-fab/paper-fab.html">
 
 
-<polymer-element name="action-block" attributes="icon action">
+<polymer-element name="action-block" attributes="icon event">
   <template>
     <style>
     :host {
@@ -42,7 +42,7 @@
     <div layout vertical>
       <div class="section-header" layout horizontal center-justified>
         <content select=".header"></content>
-        <paper-fab icon="{{icon}}" on-tap="{{something}}"></paper-fab>
+        <paper-fab icon="{{icon}}" on-tap="{{emitEvent}}"></paper-fab>
       </div>
       <div class="subtext" layout horizontal center-justified>
         <content></content>
@@ -52,16 +52,8 @@
   </template>
   <script>
   Polymer({
-    something: function() {
-      console.log('hiyo');
-    },
-    actionTapped: function() {
-      console.log('actionTapped something');
-      this.action();
-
-      // fire actions the component was initialized with
-      // example: 'show-poll-form'
-      this.fire(this.action);
+    emitEvent: function() {
+      this.fire(this.event);
     }
   });
   </script>

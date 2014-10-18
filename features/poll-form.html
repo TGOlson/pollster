@@ -2,9 +2,10 @@
 <link rel="import" href="../components/paper-input/paper-input.html">
 <link rel="import" href="../components/core-icons/core-icons.html">
 <link rel="import" href="../components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../components/paper-fab/paper-fab.html">
 
 
-<polymer-element name="poll-form" attributes="show">
+<polymer-element name="poll-form" attributes="options">
   <template>
     <style>
     .header {
@@ -17,13 +18,19 @@
       margin-top: 50px;
     }
 
-    paper-icon-button {
-      margin-top: 25px;
+    paper-input {
+      width: 500px;
+    }
+
+    paper-fab {
+      background-color: #4285f4;
+      margin-top: 17px;
+      margin-left: 10px;
       position: absolute;
     }
     </style>
 
-    <div class="poll-form" layout vertical hidden?="{{!show}}">
+    <div class="poll-form" layout vertical>
       <div layout horizontal center-justified>
         <span class="header">What question do you want to ask?</span>
       </div>
@@ -34,26 +41,28 @@
           required error="Must ask a question!">
         </paper-input>
       </div>
-      <div layout horizontal center-justified>
-        <paper-input
-          floatingLabel
-          label="Option #1">
-        </paper-input>
-        <paper-icon-button icon="add"></paper-icon-button>
-      </div>
+
+      <template repeat="{{option, i in options}}">
+
+        <div layout horizontal center-justified>
+          <paper-input floatingLabel
+            label="Option #{{i + 1}}">
+          </paper-input>
+          <template if="{{i === options.length - 1}}">
+            <paper-fab mini icon="add" on-tap="{{addOption}}"></paper-fab>
+          </template>
+        </div>
+
+      </template>
     </div>
 
   </template>
   <script>
   Polymer({
-    publish: {
-      show: {
-        value: false,
-        reflect: true
-      }
-    },
-    toggleShow: function() {
-      this.show = !this.show;
+    options: [{}],
+    addOption: function() {
+      console.log('adding option');
+      this.options.push({});
     }
   });
   </script>
