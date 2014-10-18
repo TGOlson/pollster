@@ -42,7 +42,7 @@
     <div layout vertical>
       <div class="section-header" layout horizontal center-justified>
         <content select=".header"></content>
-        <paper-fab icon="{{icon}}" on-tap="{{actionTapped}}"></paper-fab>
+        <paper-fab icon="{{icon}}" on-tap="{{something}}"></paper-fab>
       </div>
       <div class="subtext" layout horizontal center-justified>
         <content></content>
@@ -52,8 +52,12 @@
   </template>
   <script>
   Polymer({
+    something: function() {
+      console.log('hiyo');
+    },
     actionTapped: function() {
-      console.log('actionTapped', this.action);
+      console.log('actionTapped something');
+      this.action();
 
       // fire actions the component was initialized with
       // example: 'show-poll-form'
