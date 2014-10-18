@@ -18,8 +18,8 @@ $ python -m SimpleHTTPServer
 
 Navigate to `localhost:8000` to see the app.
 
-* Reading
-[https://github.com/erikringsmuth/app-router](https://github.com/erikringsmuth/app-router)
-[https://github.com/erikringsmuth/app-router-examples/tree/master/hash-routing](https://github.com/erikringsmuth/app-router-examples/tree/master/hash-routing)
-[https://www.polymer-project.org/docs/elements/](https://www.polymer-project.org/docs/elements/)
-[https://www.polymer-project.org/platform/web-animations.html](https://www.polymer-project.org/platform/web-animations.html)
+**Reading**
+* [https://github.com/erikringsmuth/app-router](https://github.com/erikringsmuth/app-router)
+* [https://github.com/erikringsmuth/app-router-examples/tree/master/hash-routing](https://github.com/erikringsmuth/app-router-examples/tree/master/hash-routing)
+* [https://www.polymer-project.org/docs/elements/](https://www.polymer-project.org/docs/elements/)
+* [https://www.polymer-project.org/platform/web-animations.html](https://www.polymer-project.org/platform/web-animations.html)
