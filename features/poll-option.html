@@ -1,0 +1,68 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/paper-input/paper-input.html">
+<link rel="import" href="../components/paper-icon-button/paper-icon-button.html">
+
+<polymer-element name="poll-option" attributes="onFocus isLastOption value label">
+  <template>
+    <style>
+    paper-input {
+      width: 50%;
+      max-width: 500px;
+    }
+    paper-icon-button {
+      margin-top: 25px;
+      position: absolute;
+      color: #d23f31;
+    }
+    .remove-option {
+      color: #d23f31;
+    }
+    .add-option {
+      color: #4285f4;
+    }
+    </style>
+
+    <div layout horizontal center-justified>
+      <paper-input floatingLabel
+        id="inputField"
+        on-focus="{{onFocus}}"
+        on-keydown="{{handleKeyDown}}"
+        inputValue="{{value}}"
+        label="{{label}}"
+        autofocus="{{isLastOption}}">
+      </paper-input>
+      <template if="{{!isLastOption}}">
+        <paper-icon-button icon="remove" on-tap="{{removeOption}}" class="remove-option"></paper-icon-button>
+      </template>
+      <template if="{{isLastOption}}">
+        <paper-icon-button icon="add" on-tap="{{addOption}}" class="add-option"></paper-icon-button>
+      </template>
+    </div>
+
+  </template>
+  <script>
+  Polymer({
+    ready: function() {
+      var input = this.$.inputField;
+
+      // set small timeout to allow time for DOM updates
+      setTimeout(function() {
+        input.focus();
+      }, 50);
+    },
+    addOption: function() {
+      console.log('adding option');
+      this.fire('add-option');
+    },
+    removeOption: function() {
+      console.log('removing option');
+      this.fire('remove-option');
+    },
+    handleKeyDown: function(event) {
+      if(this.value && event.keyCode === 13) {
+        this.addOption();
+      }
+    }
+  });
+  </script>
+</polymer-element>

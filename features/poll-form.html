@@ -1,11 +1,11 @@
 <link rel="import" href="../components/polymer/polymer.html">
-<link rel="import" href="../components/paper-input/paper-input.html">
 <link rel="import" href="../components/core-icons/core-icons.html">
+<link rel="import" href="../components/paper-input/paper-input.html">
 <link rel="import" href="../components/paper-button/paper-button.html">
-<link rel="import" href="../components/paper-fab/paper-fab.html">
 
+<link rel="import" href="../features/poll-option.html">
 
-<polymer-element name="poll-form" attributes="prompt poll">
+<polymer-element name="poll-form">
   <template>
     <style>
     .header {
@@ -13,52 +13,34 @@
       font-size: 40px;
       margin-bottom: 20px;
     }
-
     .poll-form {
       margin-top: 50px;
     }
-
     paper-input {
       width: 50%;
       max-width: 500px;
     }
-
-    paper-fab {
-      color: #4285f4;
-      background-color: white;
-      margin-top: 17px;
-      margin-left: 10px;
-      position: absolute;
-    }
-
-    .question-input {
-      /*height: 100px;*/
-    }
-
     .question-input:not(.invalid) {
       margin-bottom: 26px;
     }
-
     .publish-poll {
       margin: 30px 0;
     }
-
     .publish-poll paper-button:not([disabled]) {
       color: #4285f4;
       border: 1px solid #4285f4;
     }
-
     .publish-poll paper-button:hover {
       background-color: #4285f4;
       color: white;
     }
-
     </style>
 
     <div class="poll-form" layout vertical>
       <div layout horizontal center-justified>
         <span class="header">{{prompt}}</span>
       </div>
+
       <div layout horizontal center-justified>
         <paper-input floatingLabel
           class="question-input"
@@ -70,27 +52,20 @@
         </paper-input>
       </div>
 
-      <div id="options">
-        <template repeat="{{option, i in poll.options}}">
-
-          <div layout horizontal center-justified>
-            <paper-input floatingLabel
-              on-focus="{{optionFocus}}"
-              on-keydown="{{handleKeyDown}}"
-              inputValue="{{option.value}}"
-              label="Option #{{i + 1}}">
-            </paper-input>
-            <template if="{{i === poll.options.length - 1}}">
-              <paper-fab mini icon="add" on-tap="{{addOption}}"></paper-fab>
-            </template>
-          </div>
-
-        </template>
-      </div>
+      <template repeat="{{option, i in poll.options}}">
+        <poll-option
+          on-focus="{{optionFocus}}"
+          value="{{option.value}}"
+          label="Option #{{i + 1}}"
+          on-add-option="{{addOption}}"
+          on-remove-option="{{removeOption}}"
+          isLastOption="{{i === poll.options.length - 1}}">
+        </poll-option>
+      </template>
 
       <div layout horizontal center-justified class="publish-poll">
         <paper-button
-          disabled="{{!poll.question.value}}"
+          disabled="{{!poll.question.value || !poll.options[0].value}}"
           on-tap="{{savePoll}}">
           <core-icon icon="done"></core-icon>
           publish
@@ -103,14 +78,8 @@
   Polymer({
     prompt: null,
     poll: {
-      question: {
-        value: null
-      },
-      options: [
-        {
-          value: null
-        }
-      ]
+      question: {value: null},
+      options: [{value: null}]
     },
     questionFocus: function() {
       this.prompt = "What question do you want to ask?";
@@ -118,7 +87,7 @@
     optionFocus: function() {
       var optionPrompts = [
         'Add a real juicy option.',
-        'Get them thinking with this one.',
+        'Get \'em thinking with this one.',
         'Saddle up your pollster and ask from the hip.'
       ];
 
@@ -131,23 +100,9 @@
       this.poll.options.push(option);
       this.focusOnLastOption();
     },
-    focusOnLastOption: function() {
-
-      // use a manual set timeout to allow for DOM updates to finish
-      // TODO: look into using an event for this
-      setTimeout(function() {
-        var optionEls = this.$.options.querySelectorAll('paper-input'),
-          lastOption = optionEls[optionEls.length - 1];
-
-        lastOption.focus();
-      }.bind(this), 100);
-    },
-    handleKeyDown: function(event, detail, sender) {
-      var option = sender.templateInstance.model.option;
-
-      if(option.value && event.keyCode === 13) {
-        this.addOption();
-      }
+    removeOption: function(event, detail, sender) {
+      var index = sender.templateInstance.model.i;
+      this.poll.options.splice(index, 1);
     },
     savePoll: function() {
       console.log('saving', this.poll);

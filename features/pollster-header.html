@@ -1,0 +1,23 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<link rel="import" href="../components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../components/paper-item/paper-item.html">
+<link rel="import" href="../components/paper-icon-button/paper-icon-button.html">
+
+<polymer-element name="pollster-header" noscript>
+  <template>
+    <style>
+    core-toolbar {
+      color: #f1f1f1;
+      fill: #f1f1f1;
+    }
+    </style>
+
+    <core-toolbar style="background: #4285f4;">
+      <paper-item icon="explore" label="Pollster" flex></paper-item>
+      <paper-icon-button icon="refresh"></paper-icon-button>
+      <paper-icon-button icon="add"></paper-icon-button>
+    </core-toolbar>
+
+  </template>
+</polymer-element>
