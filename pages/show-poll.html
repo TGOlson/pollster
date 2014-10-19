@@ -3,6 +3,7 @@
 <link href="../features/poll-service.html" rel="import">
 <link href="../components/core-icons/core-icons.html" rel="import">
 <link href="../components/paper-checkbox/paper-checkbox.html" rel="import">
+<link href="../components/paper-button/paper-button.html" rel="import">
 
 <polymer-element name="show-poll" attributes="pollId">
   <template>
@@ -23,27 +24,47 @@
     p {
       padding: 5px;
     }
+    paper-button {
+      margin: 30px 0;
+    }
+    paper-button:not([disabled]) {
+      color: #4285f4;
+      border: 1px solid #4285f4;
+    }
+    paper-button:hover {
+      background-color: #4285f4;
+      color: white;
+    }
     </style>
 
     <poll-service id="pollService" on-get="{{setPoll}}"></poll-service>
 
-    <div layout vertical center>
+    <div layout vertical center id="options">
       <p class="header">{{poll.question.value}}</p>
-      <template repeat="{{option in poll.options}}">
+
+      <template repeat="{{option, i in poll.options}}">
         <div horizontal layout justified style="width:300px">
-          <paper-checkbox
-            on-change="{{handleClick}}">
-          </paper-checkbox>
+          <paper-checkbox on-change="{{toggleChecks}}" id="option{{i}}"></paper-checkbox>
           <h4 flex>{{option.value}}</h4>
           <p>{{option.count}}</p>
         </div>
       </template>
+
+      <div layout horizontal center-justified>
+      <paper-button
+        on-tap="{{saveResponse}}"
+        disabled="{{!optionSelected}}">
+        <core-icon icon="done"></core-icon>
+        Save Response
+      </paper-button>
+      </div>
 
     </div>
   </template>
 
   <script>
   Polymer({
+    optionSelected: null,
     ready: function() {
 
       // set small interval to check for poll id
@@ -61,16 +82,35 @@
     setPoll: function(event, data) {
       this.poll = data;
     },
-    handleClick: function(event, detail, sender) {
-      var checked = event.target.checked,
-        option = sender.templateInstance.model.option;
+    toggleChecks: function(event, detail, sender) {
+      var isChecked = event.target.checked,
+          option = sender.templateInstance.model.option,
+          checkboxes = this.$.options.querySelectorAll('paper-checkbox'),
+          checkbox;
 
-      if(checked) {
+      for(var i = 0; i < checkboxes.length; i++) {
+        checkbox = checkboxes[i];
+
+        // un-check any previously checked boxes
+        if(checkbox !== event.target) {
+          checkbox.checked = false;
+        }
+      }
+
+      this.optionSelected = isChecked;
+
+      this.toggleCount(option, isChecked);
+    },
+    toggleCount: function(option, isChecked) {
+      if(isChecked) {
         option.count++;
       } else {
         option.count--;
       }
+    },
+    saveResponse: function() {
 
+      // TODO: find a way to only send update as selected option
       this.$.pollService.update(this.poll.id, this.poll);
     }
   });

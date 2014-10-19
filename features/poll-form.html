@@ -39,15 +39,7 @@
     }
     </style>
 
-<!--     <core-ajax
-      id="ajax"
-      url="/api/polls"
-      handleAs="json"
-      method="POST"
-      on-core-response="{{digestReponse}}">
-    </core-ajax> -->
-
-    <poll-service id="pollService" on-response="{{digestReponse}}"></poll-service>
+    <poll-service id="pollService" on-save="{{digestReponse}}"></poll-service>
 
     <div class="poll-form" layout vertical>
       <div layout horizontal center-justified>
@@ -118,7 +110,6 @@
     },
     savePoll: function() {
       this.$.pollService.save(this.poll);
-      this.clearPoll();
     },
     clearPoll: function() {
       this.poll.question = {value: null};
@@ -132,6 +123,8 @@
 
       // look into sending response data to route
       appRouter.go(url);
+
+      this.clearPoll();
     }
   });
   </script>
