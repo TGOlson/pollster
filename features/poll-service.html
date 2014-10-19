@@ -1,7 +1,7 @@
 <link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="../components/core-ajax/core-ajax.html">
 
-<polymer-element name="poll-service" attributes="poll pollId">
+<polymer-element name="poll-service" attributes="save">
   <template>
     <style>
     :host {
@@ -9,21 +9,43 @@
     }
     </style>
     <core-ajax id="ajax"
-      auto url="/api/polls/{{pollId}}"
-      on-core-response="{{pollLoaded}}"
+      on-core-response="{{handleResponse}}"
       handleAs="json">
     </core-ajax>
   </template>
   <script>
   Polymer('poll-service', {
-    created: function() {
-      this.polls = [];
+    baseUrl: '/api/polls',
+    lastMethod: null,
+    handleResponse: function() {
+      this.fire(lastMethod, this.$.ajax.response);
     },
-    pollLoaded: function() {
-      console.log(this.$.ajax.response);
+    get: function(id) {
+      var ajax = this.$.ajax;
+      ajax.url = this.baseUrl + '/' + id;
+      ajax.go();
 
-      // Make a copy of the loaded data
-      this.poll = this.$.ajax.response;
+      lastMethod = 'get';
+    },
+    save: function(data) {
+      var ajax = this.$.ajax;
+      ajax.headers = '{"Content-Type": "application/json"}';
+      ajax.method = 'POST';
+      ajax.url = this.baseUrl;
+      ajax.body = JSON.stringify(data);
+      ajax.go();
+
+      lastMethod = 'save';
+    },
+    update: function(id, data) {
+      var ajax = this.$.ajax;
+      ajax.headers = '{"Content-Type": "application/json"}';
+      ajax.method = 'PUT';
+      ajax.url = this.baseUrl + '/' + data.id;
+      ajax.body = JSON.stringify(data);
+      ajax.go();
+
+      lastMethod = 'update';
     }
   });
   </script>

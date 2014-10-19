@@ -42,6 +42,14 @@ app.post('/api/polls', function(req, res) {
   res.send(poll);
 });
 
+app.put('/api/polls/:id', function(req, res) {
+  var id = req.params.id,
+      data = req.body,
+      poll = POLL_DB[id] = data;
+
+  res.send(poll);
+});
+
 
 var port = process.env.PORT || 8000;
 

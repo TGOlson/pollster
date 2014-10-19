@@ -13,7 +13,7 @@ $ bower install
 Start a server for the app
 
 ```
-$ python -m SimpleHTTPServer
+$ node server.js
 ```
 
 Navigate to `localhost:8000` to see the app.

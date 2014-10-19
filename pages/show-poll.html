@@ -25,7 +25,7 @@
     }
     </style>
 
-    <poll-service id="service" pollId="{{pollId}}" poll="{{poll}}"></poll-service>
+    <poll-service id="pollService" on-get="{{setPoll}}"></poll-service>
 
     <div layout vertical center>
       <p class="header">{{poll.question.value}}</p>
@@ -44,6 +44,23 @@
 
   <script>
   Polymer({
+    ready: function() {
+
+      // set small interval to check for poll id
+      // app-router seems to be a little behind polymer ready event at times
+      var checkForId = setInterval(function() {
+        if(this.pollId) {
+          this.getPoll(this.pollId);
+          clearInterval(checkForId);
+        }
+      }.bind(this), 1);
+    },
+    getPoll: function(id) {
+      this.$.pollService.get(id);
+    },
+    setPoll: function(event, data) {
+      this.poll = data;
+    },
     handleClick: function(event, detail, sender) {
       var checked = event.target.checked,
         option = sender.templateInstance.model.option;
@@ -54,7 +71,7 @@
         option.count--;
       }
 
-      // post to sever here
+      this.$.pollService.update(this.poll.id, this.poll);
     }
   });
   </script>

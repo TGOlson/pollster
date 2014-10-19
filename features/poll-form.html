@@ -6,6 +6,7 @@
 <link rel="import" href="../components/paper-button/paper-button.html">
 
 <link rel="import" href="../features/poll-option.html">
+<link rel="import" href="../features/poll-service.html">
 
 <polymer-element name="poll-form">
   <template>
@@ -38,13 +39,15 @@
     }
     </style>
 
-    <core-ajax
+<!--     <core-ajax
       id="ajax"
       url="/api/polls"
       handleAs="json"
       method="POST"
       on-core-response="{{digestReponse}}">
-    </core-ajax>
+    </core-ajax> -->
+
+    <poll-service id="pollService" on-response="{{digestReponse}}"></poll-service>
 
     <div class="poll-form" layout vertical>
       <div layout horizontal center-justified>
@@ -114,28 +117,21 @@
       this.poll.options.splice(index, 1);
     },
     savePoll: function() {
-      var ajax = this.$.ajax;
-
-      console.log('saving', this.poll);
-
-      ajax.headers = '{"Content-Type": "application/json"}';
-      ajax.body = poll = JSON.stringify(this.poll);
-      ajax.go();
-
+      this.$.pollService.save(this.poll);
       this.clearPoll();
     },
     clearPoll: function() {
       this.poll.question = {value: null};
       this.poll.options = [{value: null}];
     },
-    digestReponse: function() {
-      var response = this.$.ajax.response,
-          appRouter = document.querySelector('app-router');
+    digestReponse: function(event, data) {
+      var appRouter = document.querySelector('app-router'),
+          url = '/polls/' + data.id;
 
-      console.log('response', response);
+      console.log('response', data);
 
       // look into sending response data to route
-      appRouter.go('/polls/' + response.id);
+      appRouter.go(url);
     }
   });
   </script>
