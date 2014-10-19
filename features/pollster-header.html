@@ -4,7 +4,7 @@
 <link rel="import" href="../components/paper-item/paper-item.html">
 <link rel="import" href="../components/paper-icon-button/paper-icon-button.html">
 
-<polymer-element name="pollster-header" noscript>
+<polymer-element name="pollster-header">
   <template>
     <style>
     core-toolbar {
@@ -14,10 +14,22 @@
     </style>
 
     <core-toolbar style="background: #4285f4;">
-      <paper-item icon="explore" label="Pollster" flex></paper-item>
+      <paper-item flex
+        icon="explore"
+        label="Pollster"
+        on-tap="{{handleTap}}"></paper-item>
       <paper-icon-button icon="refresh"></paper-icon-button>
       <paper-icon-button icon="add"></paper-icon-button>
     </core-toolbar>
 
   </template>
+
+  <script>
+  Polymer({
+    handleTap: function() {
+      var appRouter = document.querySelector('app-router');
+      appRouter.go('/');
+    }
+  });
+  </script>
 </polymer-element>

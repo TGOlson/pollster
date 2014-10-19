@@ -1,0 +1,22 @@
+{
+  "name": "pollster",
+  "version": "0.0.0",
+  "description": "Real-time polling/survey application made with Polymer.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TGOlson/pollster.git"
+  },
+  "author": "Tyler Olson <tydotg@gmail.com> (http://tgolson.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TGOlson/pollster/issues"
+  },
+  "homepage": "https://github.com/TGOlson/pollster",
+  "dependencies": {
+    "express": "^4.9.8"
+  }
+}

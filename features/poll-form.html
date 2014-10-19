@@ -1,5 +1,7 @@
+<link rel="import" href="../components/app-router/app-router.html">
 <link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="../components/core-icons/core-icons.html">
+<link rel="import" href="../components/core-ajax/core-ajax.html">
 <link rel="import" href="../components/paper-input/paper-input.html">
 <link rel="import" href="../components/paper-button/paper-button.html">
 
@@ -35,6 +37,14 @@
       color: white;
     }
     </style>
+
+    <core-ajax
+      id="ajax"
+      url="/api/polls"
+      handleAs="json"
+      method="POST"
+      on-core-response="{{digestReponse}}">
+    </core-ajax>
 
     <div class="poll-form" layout vertical>
       <div layout horizontal center-justified>
@@ -76,7 +86,7 @@
   </template>
   <script>
   Polymer({
-    prompt: null,
+    prompt: "What question do you want to ask?",
     poll: {
       question: {value: null},
       options: [{value: null}]
@@ -98,15 +108,34 @@
     addOption: function() {
       var option = {value: null};
       this.poll.options.push(option);
-      this.focusOnLastOption();
     },
     removeOption: function(event, detail, sender) {
       var index = sender.templateInstance.model.i;
       this.poll.options.splice(index, 1);
     },
     savePoll: function() {
+      var ajax = this.$.ajax;
+
       console.log('saving', this.poll);
-      // post to server and redirect to finished poll here
+
+      ajax.headers = '{"Content-Type": "application/json"}';
+      ajax.body = poll = JSON.stringify(this.poll);
+      ajax.go();
+
+      this.clearPoll();
+    },
+    clearPoll: function() {
+      this.poll.question = {value: null};
+      this.poll.options = [{value: null}];
+    },
+    digestReponse: function() {
+      var response = this.$.ajax.response,
+          appRouter = document.querySelector('app-router');
+
+      console.log('response', response);
+
+      // look into sending response data to route
+      appRouter.go('/polls/' + response.id);
     }
   });
   </script>

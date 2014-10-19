@@ -28,13 +28,13 @@
     <poll-service id="service" pollId="{{pollId}}" poll="{{poll}}"></poll-service>
 
     <div layout vertical center>
-      <p class="header">{{poll.question}}</p>
+      <p class="header">{{poll.question.value}}</p>
       <template repeat="{{option in poll.options}}">
         <div horizontal layout justified style="width:300px">
           <paper-checkbox
             on-change="{{handleClick}}">
           </paper-checkbox>
-          <h4 flex>{{option.text}}</h4>
+          <h4 flex>{{option.value}}</h4>
           <p>{{option.count}}</p>
         </div>
       </template>

@@ -9,7 +9,7 @@
     }
     </style>
     <core-ajax id="ajax"
-      auto url="./../api/poll-{{pollId}}.json"
+      auto url="/api/polls/{{pollId}}"
       on-core-response="{{pollLoaded}}"
       handleAs="json">
     </core-ajax>
