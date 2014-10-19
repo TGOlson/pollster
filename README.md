@@ -1,12 +1,13 @@
 ### pollster
 
-Real-time polling/survey application made with Polymer. [See it live](http://tgolson.com/pollster/)
+Real-time polling/survey application made with Polymer. [See it live](http://poly-pollster.herokuapp.com/)
 
 Created with a focus on an intuitive & responsive UI, made with reusable components.
 
-Install components
+Install components & modules
 
 ```
+$ npm install
 $ bower install
 ```
 
